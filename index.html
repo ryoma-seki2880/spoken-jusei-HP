@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>柔道整復師国家試験対策ツール - 取扱説明書</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ヘッダー */
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-logo {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .school-logo-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .school-logo-img {
+            max-height: 100px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        /* セクション */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* 機能グリッド */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* ステップガイド */
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            counter-increment: step-counter;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* ヒントボックス */
+        .tip-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #fdcb6e;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-title::before {
+            content: "💡";
+            margin-right: 8px;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .step {
+                padding-left: 60px;
+            }
+
+            .step::before {
+                width: 30px;
+                height: 30px;
+                left: 15px;
+                font-size: 1rem;
+            }
+            
+            .school-logo-img {
+                max-height: 70px;
+            }
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <header class="header">
+            <div class="school-logo-container">
+                <img src="school-logo.png" alt="学校法人エイジェック学園 スポーツ健康医療専門学校" class="school-logo-img">
+            </div>
+            <h1 class="main-title">柔道整復師国家試験対策ツール</h1>
+            <p class="subtitle">合格への確実な道筋を提供する、あなた専用の学習システム</p>
+        </header>
+
+        <!-- 概要セクション -->
+        <section class="section">
+            <h2 class="section-title">🎯 このツールについて</h2>
+            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f1f8ff 100%); padding: 25px; border-radius: 12px; margin-bottom: 25px; border-left: 5px solid #2196f3;">
+                <h3 style="color: #1976d2; font-size: 1.2rem; margin-bottom: 15px; font-weight: 600;">🏫 学内専用ツール</h3>
+                <p style="color: #2c3e50; font-size: 1rem; line-height: 1.6; margin-bottom: 10px;">
+                    <strong>本ツールは、スポーツ健康医療専門学校の柔整科専用</strong>に開発された学習支援システムです。
+                </p>
+                <p style="color: #666; font-size: 0.9rem; line-height: 1.5;">
+                    ※ 学外の方はご利用いただけません。学内の学生の皆さんのみが対象となります。
+                </p>
+            </div>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #555;">
+                本ツールは、柔道整復師国家試験の合格を目指す学生の皆さんのために開発された、
+                最新のAI技術を活用した学習支援システムです。
+                過去問演習から苦手分野の分析まで、効率的な学習をサポートします。
+            </p>
+            <div style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #27ae60;">
+                <h4 style="color: #2e7d32; margin-bottom: 10px; font-size: 1rem;">🔬 学習効果のエビデンス</h4>
+                <p style="color: #2c3e50; font-size: 0.9rem; line-height: 1.6;">
+                    デジタル端末を活用した反復学習システムは、教育工学分野の研究において記憶の定着率向上が確認されています。
+                    個別最適化された問題演習と即時フィードバックにより、従来の学習方法と比較して効率的な知識習得が期待できます。
+                </p>
+            </div>
+        </section>
+
+        <!-- 主要機能 -->
+        <section class="section">
+            <h2 class="section-title">✨ 主要機能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📝</span>
+                    <h3 class="feature-title">10問クイズ</h3>
+                    <p class="feature-desc">科目・難易度を選択して、短時間で効率的に学習できます。隙間時間の活用に最適です。</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3 class="feature-title">柔道整復師への道</h3>
+                    <p class="feature-desc">50問の本格模試で実力を測定。本番さながらの環境で学習効果を最大化します。</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🔍</span>
+                    <h3 class="feature-title">過去問検索</h3>
+                    <p class="feature-desc">豊富な過去問データベースから、条件を指定して必要な問題を素早く見つけられます。</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3 class="feature-title">苦手分野分析</h3>
+                    <p class="feature-desc">AIが学習データを分析し、あなたの苦手分野を特定。効率的な復習プランを提案します。</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">📈</span>
+                    <h3 class="feature-title">学習進捗管理</h3>
+                    <p class="feature-desc">詳細な学習レポートで、正答率や学習時間を可視化。モチベーション維持をサポートします。</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🗓️</span>
+                    <h3 class="feature-title">回数別模試</h3>
+                    <p class="feature-desc">過去の国家試験を回数別に解答可能。実際の試験形式で実力を確認できます。</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">📋</span>
+                    <h3 class="feature-title">国家試験傾向分析</h3>
+                    <p class="feature-desc">過去の国家試験データを分析し、各科目の出題頻度や傾向をグラフで視覚化。効率的な学習計画の立案をサポートします。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使い方ガイド -->
+        <section class="section">
+            <h2 class="section-title">🚀 使い方ガイド</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <h3 class="step-title">アカウント作成・ログイン</h3>
+                    <p class="step-desc">
+                        学習進捗を保存するため、まずはアカウントを作成してログインしましょう。
+                    </p>
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 8px; margin-top: 10px; border-left: 4px solid #ffc107;">
+                        <div style="font-weight: 600; color: #f57c00; margin-bottom: 8px;">📧 重要：アカウント作成時の注意</div>
+                        <ul style="color: #5d4037; font-size: 0.9rem; line-height: 1.5; margin-left: 15px;">
+                            <li><strong>メールアドレス</strong>：学校から付与されたメールアドレス（@spo-ken.ac.jp）を使用してください</li>
+                            <li><strong>ユーザー名</strong>：必ず漢字フルネーム（例：田中太郎）で入力してください</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">学習モードを選択</h3>
+                    <p class="step-desc">
+                        目的に応じて学習モードを選択します。短時間学習なら「10問クイズ」、
+                        本格的な実力測定なら「柔道整復師への道」がおすすめです。
+                    </p>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">科目・難易度を設定</h3>
+                    <p class="step-desc">
+                        学習したい科目と難易度を選択します。苦手な分野を集中的に学習することで、
+                        効率的にスキルアップできます。
+                    </p>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">問題演習</h3>
+                    <p class="step-desc">
+                        画面の指示に従って問題を解いていきます。間違った問題があっても、
+                        正解を確認して理解を深めましょう。
+                    </p>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">結果確認・分析</h3>
+                    <p class="step-desc">
+                        演習後は必ず結果を確認し、間違った問題を復習しましょう。
+                        苦手分野分析機能で、重点的に学習すべき分野を把握できます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">学習効果を最大化するコツ</div>
+                <ul style="margin-left: 20px; color: #2d3436;">
+                    <li>毎日継続して取り組むことが重要です</li>
+                    <li>間違った問題は必ず正解を確認して理解しましょう</li>
+                    <li>定期的に苦手分野分析を確認し、学習計画を見直しましょう</li>
+                    <li>本番前は「回数別模試」で実践的な練習を積みましょう</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 各機能の詳細 -->
+        <section class="section">
+            <h2 class="section-title">🔧 各機能の詳細説明</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="font-size: 1.3rem; color: #2c3e50; margin-bottom: 15px;">📝 10問クイズ</h3>
+                <p style="margin-bottom: 10px;">短時間で効率的に学習できる基本モードです。</p>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li>科目を複数選択可能</li>
+                    <li>難易度（易しい・普通・難しい）から選択</li>
+                    <li>即座に正解・不正解が表示</li>
+                    <li>問題ごとに正解を確認可能</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="font-size: 1.3rem; color: #2c3e50; margin-bottom: 15px;">🎯 柔道整復師への道（50問模試）</h3>
+                <p style="margin-bottom: 10px;">本格的な実力測定ができる上級者向けモードです。</p>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li>全科目から50問を出題</li>
+                    <li>難易度を一つ選択</li>
+                    <li>結果は「完全制覇」または「失敗」の厳格判定</li>
+                    <li>本番さながらの緊張感で実力向上</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="font-size: 1.3rem; color: #2c3e50; margin-bottom: 15px;">🔍 過去問検索</h3>
+                <p style="margin-bottom: 10px;">豊富な過去問データベースから効率的に問題を検索できます。</p>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li>試験回数での絞り込み</li>
+                    <li>科目での絞り込み</li>
+                    <li>カテゴリ（大項目・中項目・小項目）での絞り込み</li>
+                    <li>キーワード検索</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="font-size: 1.3rem; color: #2c3e50; margin-bottom: 15px;">📊 プロフィール・分析機能</h3>
+                <p style="margin-bottom: 10px;">あなたの学習状況を詳細に分析・可視化します。</p>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li>総問題数・正解数・正答率の表示</li>
+                    <li>科目別成績の詳細分析</li>
+                    <li>苦手分野の自動特定</li>
+                    <li>学習レポートの自動生成</li>
+                    <li>学習アドバイスの提供</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- よくある質問 -->
+        <section class="section">
+            <h2 class="section-title">❓ よくある質問</h2>
+            
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. アカウント登録は必須ですか？</h3>
+                <p style="color: #555;">A. はい。学習進捗の保存や分析機能を利用するには、アカウント登録が必要です。<strong>学校から付与されたメールアドレス（@spo-ken.ac.jp）</strong>で登録してください。</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. どのメールアドレスを使用すればよいですか？</h3>
+                <p style="color: #555;">A. 学校から付与された<strong>メールアドレス（@spo-ken.ac.jp）のみ</strong>使用できます。個人のGmailアドレスやその他のアドレスでは登録できません。</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. ユーザー名はどのように入力すればよいですか？</h3>
+                <p style="color: #555;">A. <strong>漢字フルネーム</strong>（例：田中太郎、佐藤花子）で入力してください。ひらがなやローマ字、ニックネームでの登録はお控えください。</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. 誰でも利用できますか？</h3>
+                <p style="color: #555;">A. いいえ。本ツールは<strong>スポーツ健康医療専門学校の柔整科専用</strong>です。学外の方や他学科の学生は利用できません。</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. データはどのくらい保存されますか？</h3>
+                <p style="color: #555;">A. 学習データは継続的に保存され、いつでも過去の学習履歴を確認できます。</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. スマートフォンでも利用できますか？</h3>
+                <p style="color: #555;">A. はい。レスポンシブデザインにより、スマートフォンやタブレットでも快適に利用できます。</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.2rem; color: #2c3e50; margin-bottom: 10px;">Q. 問題に間違いを発見した場合は？</h3>
+                <p style="color: #555;">A. 各問題画面にある「問題を報告」ボタンから、簡単に問題を報告できます。</p>
+            </div>
+        </section>
+
+        <!-- アクセス方法 -->
+        <section class="section">
+            <h2 class="section-title">🌐 アクセス方法</h2>
+            <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px;">
+                <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.3rem;">ウェブアプリURL</h3>
+                <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #667eea;">
+                    <code style="font-size: 0.9rem; color: #667eea; word-break: break-all;">
+                        https://script.google.com/a/macros/agekke.ac.jp/s/AKfycbzpylNTAIwypVYbUf8d0ohYrmjEPYdi9XJIEtTWyT8XjplrFy7SjIMyKuK5UArLbDxa/exec
+                    </code>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="https://script.google.com/a/macros/agekke.ac.jp/s/AKfycbzpylNTAIwypVYbUf8d0ohYrmjEPYdi9XJIEtTWyT8XjplrFy7SjIMyKuK5UArLbDxa/exec" 
+                       target="_blank" 
+                       style="background: #667eea; color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        📱 スマートフォンでアクセス
+                    </a>
+                    <a href="https://script.google.com/a/macros/agekke.ac.jp/s/AKfycbzpylNTAIwypVYbUf8d0ohYrmjEPYdi9XJIEtTWyT8XjplrFy7SjIMyKuK5UArLbDxa/exec" 
+                       target="_blank" 
+                       style="background: #764ba2; color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        💻 PCでアクセス
+                    </a>
+                </div>
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+                    ※ ブックマーク登録をおすすめします
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section cta-section">
+            <h2 class="cta-title">今すぐ学習を始めましょう！</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem;">
+                国家試験合格への第一歩を踏み出しましょう。
+                継続的な学習があなたの夢を現実にします。
+            </p>
+            <a href="https://script.google.com/a/macros/agekke.ac.jp/s/AKfycbzpylNTAIwypVYbUf8d0ohYrmjEPYdi9XJIEtTWyT8XjplrFy7SjIMyKuK5UArLbDxa/exec" 
+               target="_blank" 
+               class="cta-button">今すぐツールにアクセス</a>
+        </section>
+    </div>
+</body>
+</html>
